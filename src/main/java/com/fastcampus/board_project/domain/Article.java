@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
@@ -22,6 +23,7 @@ import java.util.Set;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Article {
 
@@ -31,7 +33,7 @@ public class Article {
 
     @Setter
     @JoinColumn(name = "userId")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private UserAccount userAccount;
 
     @Setter @Column(nullable = false) private String title;
@@ -60,13 +62,13 @@ public class Article {
 
     protected Article() {}
 
-    private Article(UserAccount userAccount, String title, String content) {
+    private Article(UserAccount userAccount, String title, String content, String hashtag) {
         this.title = title;
         this.content = content;
     }
 
-    private static Article of(UserAccount userAccount, String title, String content, String hashtag) {
-        return new Article(userAccount, content, hashtag);
+    public static Article of(UserAccount userAccount, String title, String content, String hashtag) {
+        return new Article(userAccount, title, content, hashtag);
     }
 
     @Override
@@ -79,5 +81,9 @@ public class Article {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public void setHashtag(String updateHashtag) {
+        this.hashtag = updateHashtag;
     }
 }

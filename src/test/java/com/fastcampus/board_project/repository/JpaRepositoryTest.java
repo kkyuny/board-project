@@ -40,4 +40,48 @@ class JpaRepositoryTest {
                 .isNotNull()
                 .hasSize(123);
     }
+
+    @DisplayName("insert test")
+    @Test
+    void givenTestData_whenInserting_thenWorksFine(){
+        // Given
+        long preCnt = articleRepository.count();
+
+        // When
+        Article savedArticle = articleRepository.save(Article.of(null, "new article", "new content", "#spring"));
+
+        // Then
+        assertThat(articleRepository.count()).isEqualTo(preCnt + 1);
+    }
+
+    @DisplayName("update test")
+    @Test
+    void givenTestData_whenUpdating_thenWorksFine(){
+        // Given
+        Article article = articleRepository.findById(1L).orElseThrow();
+        String updateHashtag = "#springboot";
+        article.setHashtag(updateHashtag);
+
+        // When
+        Article savedArticle = articleRepository.saveAndFlush(article);
+
+        // Then
+        assertThat(savedArticle).hasFieldOrPropertyWithValue("hashtag", updateHashtag);
+    }
+
+    @DisplayName("delete test")
+    @Test
+    void givenTestData_whenDeleting_thenWorksFine(){
+        // Given
+        Article article = articleRepository.findById(1L).orElseThrow();
+        long preCnt = articleRepository.count();
+        long preCnt2 = articleCommentRepository.count();
+        int deleteSize = article.getArticleComments().size();
+        // When
+        articleRepository.delete(article);
+
+        // Then
+        assertThat(articleRepository.count()).isEqualTo(preCnt - 1);
+        assertThat(articleCommentRepository.count()).isEqualTo(preCnt2 - deleteSize);
+    }
 }
