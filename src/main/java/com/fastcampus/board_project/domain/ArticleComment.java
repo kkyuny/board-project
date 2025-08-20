@@ -10,7 +10,9 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @ToString
@@ -24,6 +26,20 @@ public class ArticleComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Setter
+    @JoinColumn(name = "userId")
+    @ManyToOne(optional = false)
+    private UserAccount userAccount; // 유저 정보 (ID)
+
+    @Setter
+    @Column(updatable = false)
+    private Long parentCommentId; // 부모 댓글 ID
+
+    @ToString.Exclude
+    @OrderBy("createdAt ASC")
+    @OneToMany(mappedBy = "parentCommentId", cascade = CascadeType.ALL)
+    private Set<ArticleComment> childComments = new LinkedHashSet<>();
 
     @Setter @ManyToOne(optional = false) private Article article;
     @Setter @Column(nullable = false, length = 500) private String content;

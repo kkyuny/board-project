@@ -29,10 +29,24 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
+    @JoinColumn(name = "userId")
+    @ManyToOne(optional = false)
+    private UserAccount userAccount;
+
     @Setter @Column(nullable = false) private String title;
     @Setter @Column(nullable = false, length = 10000) private String content;
 
     @Setter private String hashtag;
+
+    @ToString.Exclude
+    @JoinTable(
+            name = "article_hashtag",
+            joinColumns = @JoinColumn(name = "articleId"),
+            inverseJoinColumns = @JoinColumn(name = "hashtagId")
+    )
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Hashtag> hashtags = new LinkedHashSet<>();
 
     @ToString.Exclude
     @OrderBy("id")
@@ -46,14 +60,13 @@ public class Article {
 
     protected Article() {}
 
-    private Article(String title, String content, String hashtag) {
+    private Article(UserAccount userAccount, String title, String content) {
         this.title = title;
         this.content = content;
-        this.hashtag = hashtag;
     }
 
-    private static Article of(String title, String content, String hashtag) {
-        return new Article(title, content, hashtag);
+    private static Article of(UserAccount userAccount, String title, String content, String hashtag) {
+        return new Article(userAccount, content, hashtag);
     }
 
     @Override
