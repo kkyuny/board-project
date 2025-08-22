@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@WebMvcTest // 컨트롤러 테스트만으로는 jpa config를 확인할 수 없어서 통합테스트로 진행한다.
+//@WebMvcTest // WebMvcTest 만으로는 data rest 테스르를 진행할 수 없어서 통합테스트로 진행한다.
 @DisplayName("Data Rest Test")
 @Transactional
 @AutoConfigureMockMvc
