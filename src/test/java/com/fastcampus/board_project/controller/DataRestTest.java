@@ -1,5 +1,6 @@
 package com.fastcampus.board_project.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.MediaType;
@@ -17,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //@WebMvcTest // WebMvcTest 만으로는 data rest 테스르를 진행할 수 없어서 통합테스트로 진행한다.
+@Disabled("Spring Data REST 통합테스트는 완료되어 제외 처리")
 @DisplayName("Data Rest Test")
 @Transactional
 @AutoConfigureMockMvc
