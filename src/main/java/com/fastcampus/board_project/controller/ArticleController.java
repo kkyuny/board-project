@@ -20,7 +20,7 @@ public class ArticleController {
 
     @GetMapping("/{articleId}")
     public String article(@PathVariable Long articleId, ModelMap map) {
-        map.addAttribute("article", null);
+        map.addAttribute("article", "임시데이터");
         map.addAttribute("articleComments", List.of());
 //        map.addAttribute("totalCount", articleService.getArticleCount());
 //        map.addAttribute("searchTypeHashtag", SearchType.HASHTAG);
