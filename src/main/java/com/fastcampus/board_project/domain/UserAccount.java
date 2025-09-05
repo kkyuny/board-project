@@ -16,10 +16,12 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @Table(indexes = {
-        @Index(columnList = "email", unique = true)
+        @Index(columnList = "email", unique = true),
+        @Index(columnList = "createdAt"),
+        @Index(columnList = "createdBy")
 })
 @Entity
-public class UserAccount {
+public class UserAccount extends AuditingFields {
     @Id
     @Column(length = 50)
     private String userId;
@@ -30,14 +32,7 @@ public class UserAccount {
     @Setter @Column(length = 100) private String nickname;
     @Setter private String memo;
 
-    @CreatedDate
-    @Column(nullable = false) private LocalDateTime createdAt;
-    @CreatedBy
-    @Column(nullable = false, length = 100) private String createdBy;
-    @LastModifiedDate
-    @Column(nullable = false) private LocalDateTime modifiedAt;
-    @LastModifiedBy
-    @Column(nullable = false) private String modifiedBy;
+
     protected UserAccount() {}
 
     private UserAccount(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
@@ -46,6 +41,8 @@ public class UserAccount {
         this.email = email;
         this.nickname = nickname;
         this.memo = memo;
+        this.createdBy = createdBy;
+        this.modifiedBy = createdBy;
     }
 
     public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo) {
@@ -60,12 +57,12 @@ public class UserAccount {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof UserAccount that)) return false;
-        return this.userId != null && this.userId.equals(that.userId);
+        return this.getUserId() != null && this.getUserId().equals(that.getUserId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.userId);
+        return Objects.hash(this.getUserId());
     }
 
 }

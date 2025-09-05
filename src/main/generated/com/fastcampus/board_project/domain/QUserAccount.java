@@ -19,17 +19,23 @@ public class QUserAccount extends EntityPathBase<UserAccount> {
 
     public static final QUserAccount userAccount = new QUserAccount("userAccount");
 
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+    public final QAuditingFields _super = new QAuditingFields(this);
 
-    public final StringPath createdBy = createString("createdBy");
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
+    //inherited
+    public final StringPath createdBy = _super.createdBy;
 
     public final StringPath email = createString("email");
 
     public final StringPath memo = createString("memo");
 
-    public final DateTimePath<java.time.LocalDateTime> modifiedAt = createDateTime("modifiedAt", java.time.LocalDateTime.class);
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
-    public final StringPath modifiedBy = createString("modifiedBy");
+    //inherited
+    public final StringPath modifiedBy = _super.modifiedBy;
 
     public final StringPath nickname = createString("nickname");
 

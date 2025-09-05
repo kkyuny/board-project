@@ -20,19 +20,25 @@ public class QHashtag extends EntityPathBase<Hashtag> {
 
     public static final QHashtag hashtag = new QHashtag("hashtag");
 
+    public final QAuditingFields _super = new QAuditingFields(this);
+
     public final SetPath<Article, QArticle> articles = this.<Article, QArticle>createSet("articles", Article.class, QArticle.class, PathInits.DIRECT2);
 
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final StringPath createdBy = createString("createdBy");
+    //inherited
+    public final StringPath createdBy = _super.createdBy;
 
     public final StringPath hashtagName = createString("hashtagName");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final DateTimePath<java.time.LocalDateTime> modifiedAt = createDateTime("modifiedAt", java.time.LocalDateTime.class);
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
-    public final StringPath modifiedBy = createString("modifiedBy");
+    //inherited
+    public final StringPath modifiedBy = _super.modifiedBy;
 
     public QHashtag(String variable) {
         super(Hashtag.class, forVariable(variable));
