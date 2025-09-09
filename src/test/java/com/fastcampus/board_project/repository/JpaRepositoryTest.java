@@ -2,6 +2,7 @@ package com.fastcampus.board_project.repository;
 
 import com.fastcampus.board_project.config.JpaConfig;
 import com.fastcampus.board_project.domain.Article;
+import com.fastcampus.board_project.domain.UserAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,16 @@ import static org.assertj.core.api.Assertions.*;
 class JpaRepositoryTest {
     private final ArticleRepository articleRepository;
     private final ArticleCommentRepository articleCommentRepository;
+    private final UserAccountRepository userAccountRepository;
 
-    public JpaRepositoryTest(@Autowired ArticleRepository articleRepository, @Autowired ArticleCommentRepository articleCommentRepository) {
+    JpaRepositoryTest(
+            @Autowired ArticleRepository articleRepository,
+            @Autowired ArticleCommentRepository articleCommentRepository,
+            @Autowired UserAccountRepository userAccountRepository
+    ) {
         this.articleRepository = articleRepository;
         this.articleCommentRepository = articleCommentRepository;
+        this.userAccountRepository = userAccountRepository;
     }
 
     @DisplayName("select test")
@@ -46,9 +53,11 @@ class JpaRepositoryTest {
     void givenTestData_whenInserting_thenWorksFine(){
         // Given
         long preCnt = articleRepository.count();
+        UserAccount userAccount = userAccountRepository.save(UserAccount.of("newUno", "pw", null, null, null));
 
         // When
-        Article savedArticle = articleRepository.save(Article.of("new article", "new content", "#spring"));
+        Article article = Article.of(userAccount, "new article", "new content");
+        Article savedArticle = articleRepository.save(article);
 
         // Then
         assertThat(articleRepository.count()).isEqualTo(preCnt + 1);
@@ -60,7 +69,6 @@ class JpaRepositoryTest {
         // Given
         Article article = articleRepository.findById(1L).orElseThrow();
         String updateHashtag = "#springboot";
-        article.setHashtag(updateHashtag);
 
         // When
         Article savedArticle = articleRepository.saveAndFlush(article);
