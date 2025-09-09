@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -54,7 +55,8 @@ class ArticleControllerTest {
     @Test
     void givenNothing_whenRequestingArticlesView_thenReturnsArticlesView() throws Exception {
         // Given
-        given(articleService.searchArticles(eq(null), eq(null), (Pageable) any(Pageable.class))).willReturn(Page.empty());
+        given(articleService.searchArticles(eq(null), eq(null), Mockito.<Pageable>any()))
+                .willReturn(Page.empty());
         given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(0, 1, 2, 3, 4));
 
         // When & Then
@@ -65,7 +67,7 @@ class ArticleControllerTest {
                 .andExpect(model().attributeExists("articles"))
                 .andExpect(model().attributeExists("paginationBarNumbers"))
                 .andExpect(model().attributeExists("searchTypes"));
-        then(articleService).should().searchArticles(eq(null), eq(null), (Pageable) any(Pageable.class));
+        then(articleService).should().searchArticles(eq(null), eq(null), Mockito.<Pageable>any());
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
     }
 
