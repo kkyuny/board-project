@@ -10,9 +10,12 @@ logging:
 spring:
   application.name: board-project
   datasource:
-    url: jdbc:mysql://localhost:3306/board
-    username: kyun
-    password: 4r3e2w1q
+    #url: jdbc:mysql://localhost:3306/board
+    url: jdbc:postgresql://localhost:5432/board
+    username: test
+    password: 1234
+    #username: kyun
+    #password: 4r3e2w1q
   jpa:
     open-in-view: false
     defer-datasource-initialization: true
