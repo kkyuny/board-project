@@ -20,6 +20,18 @@ public class JpaConfig {
         auditorAware()를 통해 @CreatedBy, @LastModifiedBy를 채우게 된다,
         이 때의 정보는 스프링 시큐리티를 통해 로그인한 사용자의 userName을 사용한다.
         이 때 사용자 정보는 SecurityContextHolder.SecurityContext.Authentication.Principal에 저장되어 있다.
+
+        - Authentication 객체 예시
+        UsernamePasswordAuthenticationToken [
+        Principal=BoardPrincipal(
+            username=kyun,
+            password=[PROTECTED],
+            nickname=kyun,
+            authorities=[ROLE_USER]
+        ),
+        Credentials=[PROTECTED],
+        Authenticated=true
+]
      */
     @Bean
     public AuditorAware<String> auditorAware() {
