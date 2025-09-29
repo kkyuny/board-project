@@ -8,21 +8,24 @@
 - Spring Boot 3.5.4
 
 ## 기술 세부 스택
-- Spring Boot
-- Spring Boot Actuator
-- Spring Web
-- Spring Data JPA
-- Rest Repositories
-- Rest Repositories HAL Explorer
-- Thymeleaf
-- Spring Security
-- H2 Database
-- MySQL Driver
-- Lombok
-- Spring Boot DevTools
-- Spring Configuration Processor
+- Spring Boot Starter
+  - Spring Boot Actuator
+  - Spring Web (Spring MVC)
+  - Spring Data JPA
+  - Spring Data REST
+  - Spring Data REST HAL Explorer
+  - Thymeleaf
+  - Spring Security
+  - Spring Boot OAuth2 Client
+- Database
+  - H2 Database
+  - MySQL Driver
+  - PostgreSQL Driver
+- 기타
+  - Lombok
+  - Spring Boot DevTools
+  - Spring Configuration Processor
 
 ## 그 외
-- QueryDSL 5.0.0
-- Bootstrap 5.2.0-Beta1
-- Heroku
+- QueryDSL
+- Bootstrap
